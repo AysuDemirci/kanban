@@ -30,10 +30,10 @@ body{
   margin:0  auto;
   padding: 0 2rem;
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
 }
-.header ul{
+.header .ul{
   display: flex;
   list-style: none;
   align-items: center;
@@ -50,6 +50,13 @@ body{
 
  
 }
+
+.profile{
+  position: relative;
+  display: flex;
+  column-gap: 0.8rem;
+  margin-top: 0.5rem;
+}
 .logo{
   
   color: #fff;
@@ -59,17 +66,13 @@ body{
   color: #fff;
 }
 
-.profile{
-  margin-left: 65%;
- 
-}
 
 .square{
   width: 35px;
   height: 35px;
   background-color: purple;
   border-radius: 18px;
-  margin-top:-1px;
+  margin-top: -0.5rem;
 }
 
 
@@ -304,23 +307,49 @@ transition: margin-left 1s ease;
 }
 
 
-.main-container{
-  display: grid;
-  grid-template-columns: 280px 1fr;;
-  grid-gap: 10px;
-  
-}
 
 .main-content{
   padding: 20px 0px 0px 20px;
+  margin-left: 60px;
+  transition: margin-left 0.4s;
+width: 100%;
 
+
+}
+
+.main-content.open{
+  margin-left: 270px;
+}
+.list-addList-container{
+  display: flex;
+  flex-wrap: nowrap;
+width: 100%;
+position: absolute;
+align-items: flex-start;
+  gap: 1rem;
 }
 
 .navbar-toggle{
   background-color: #ededed;
-  width: 6rem;
-  height: 3rem;
-  border-radius: 20px;
+  width: 9rem;
+  height: 8.4rem;
+  border-radius: 8px;
+ position: absolute;
+ top:115%;
+ left: 15%;
+ z-index: 1;
+
+}
+
+.toggle-ul{
+list-style: none;
+padding: 10px;
+font-size: 0.8rem;
+
+}
+
+.toggle-ul li{
+  padding: 3px;
 }
 
 .navbar-toggleButton{
@@ -328,13 +357,14 @@ transition: margin-left 1s ease;
   border: 1px solid #ff4b2b;
   background-color: #ff4b2b;
   color: #ffffff;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
   padding: 10px;
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
-margin:6px 4px;
+  margin-left: 30px;
+  margin-top:5px;
   outline: none;
   cursor: pointer;
 }
@@ -429,3 +459,95 @@ margin:6px 4px;
   width: 100%;
 }
 
+
+.card-group{
+  width: 15rem;
+  background-color: rgb(224, 224, 224);
+  padding:10px;
+  border-radius: 7px;
+  margin-bottom: 7px;
+
+}
+
+.card-name-input{
+  background-color: rgb(224, 224, 224);
+  color: #575656;
+  border: none;
+  padding: 6px;
+  width: 100%;
+  border-radius: 5px;
+  outline: #C62368;
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+.card-name-input:focus{
+  border:2px solid #C62368;
+  background-color: #fafafa;
+}
+
+.add-cart-button{
+  padding: 5px;
+  color:#575656 ;
+  font-weight: bold;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.plus-icon{
+  font-size: 0.65rem;
+  margin-left: 2px;
+}
+
+.add-icon{
+  font-size: 0.65rem;
+  margin-right: 7px;
+  
+
+}
+
+
+.card{
+  background-color:#fafafa ;
+  padding: 6px;
+  border-radius: 5px;
+  font-size: 13px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.cardInput{
+width: 100%;
+padding: 5px;
+border: none;
+background-color: #fafafa;
+outline: #C62368;
+line-break: auto;
+
+}
+
+.cardInput:focus{
+  border:2px solid #C62368;
+}
+
+.add-list{
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+  background: linear-gradient(135deg,rgba(255,255,255,0.1),rgba(255,255,255,0));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  letter-spacing: 0.08rem;
+  transition: 0.2s ;
+  width: 15rem;
+  text-align: left;
+  height: 50px;
+}
+
+.add-list:hover{
+  background: rgb(0 0 0 / 4%);
+}

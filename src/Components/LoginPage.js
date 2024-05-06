@@ -23,10 +23,10 @@ export default function LoginPage() {
     <div className={containerClasses} id="main">
       <div className="signUpContainer">
         <form>
-          <h4 className="title">Create Account</h4>
+          <h4 className="title">Hesap Oluştur</h4>
           <input
             type="text"
-            placeholder="Name"
+            placeholder="İsim"
             className="inputs"
             name="name"
             value={userData.name}
@@ -44,7 +44,7 @@ export default function LoginPage() {
           ></input>
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Şifre"
             className="inputs"
             name="password"
             value={userData.password}
@@ -60,13 +60,13 @@ export default function LoginPage() {
               userData.password === ""
             }
           >
-            Sign Up
+            Kayıt Ol
           </button>
         </form>
       </div>
       <div className="signInContainer">
         <form>
-          <h4 className="title">Sign In</h4>
+          <h4 className="title">Giriş Yap</h4>
           <input
             type="email"
             placeholder="Email"
@@ -77,44 +77,43 @@ export default function LoginPage() {
           ></input>
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Şifre"
             className="inputs"
             name="password"
             onChange={handleChangeValue}
             value={userData.password}
           ></input>
           <button className="buttons" onClick={signIn}>
-            Sign In
+            Giriş Yap
           </button>
         </form>
       </div>
       <div className="overlay-container">
         <div className="overlay">
           <div className="leftOverlayPanel">
-            <h4 className="title">Welcome Back!</h4>
+            <h4 className="title">Tekrar Hoşgeldin!</h4>
             <p className="paragraph">
               {" "}
-              To keep connected with us please login with your personal info
-            </p>
+              Bizimle bağlantıya katılmak için lütfen kişisel bilgilerinizle giriş yapın.</p>
             <button
               id="signIn"
               onClick={handleSignInClick}
               className="ghost-button buttons"
             >
-              Sign In
+              Giriş Yap
             </button>
           </div>
           <div className="rightOverlayPanel">
-            <h4 className="title">Hello, Friend!</h4>
+            <h4 className="title">Selam!</h4>
             <p className="paragraph">
-              Enter Your personal details and start journey with us
+              Birkaç kişisel bilgini girerek bizimle yolculuğa başla.
             </p>
             <button
               id="signUp"
               onClick={handleSignUpClick}
               className="ghost-button buttons"
             >
-              Sign Up
+              Kayıt Ol
             </button>
           </div>
         </div>

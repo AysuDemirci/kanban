@@ -1,9 +1,4 @@
-import React, { useEffect, useState } from "react";
-// import { LuLayoutPanelTop } from "react-icons/lu";
-// import { IoPersonAdd } from "react-icons/io5";
-// import { IoIosSettings } from "react-icons/io";
-
-// import { FaAngleRight } from "react-icons/fa";
+import React, { useState } from "react";
 import { FaHome } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { AiFillTool } from "react-icons/ai";
@@ -12,9 +7,10 @@ import { IoMdMail } from "react-icons/io";
 import { FaBookmark } from "react-icons/fa";
 import { IoIosMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import { useKanbanContext } from "../../KanbanContext";
 
 export default function Content() {
-  const [isOpen, setIsOpen] = useState(false);
+
   const navItems = [
     { name: "ana sayfa", icon: <FaHome /> },
     { name: "ayarlar", icon: <IoMdSettings /> },
@@ -23,29 +19,8 @@ export default function Content() {
     { name: "mail", icon: <IoMdMail /> },
     { name: "yer imleri", icon: <FaBookmark /> },
   ];
+  const { isOpen, setIsOpen } = useKanbanContext();
 
-  // const [style, setStyle] = useState({});
-
-  // function toggleOpen() {
-  //   setOpen(!open);
-  // }
-  // useEffect(() => {
-  //   if (open) {
-  //     setStyle({
-  //       color: "#fff",
-  //       marginLeft: "12.8%",
-  //       borderColor: "#fff",
-
-  //     });
-  //   } else {
-  //     setStyle({
-  //       color: "#ff416c",
-  //       marginLeft: "0px",
-  //       borderColor: "#ff416c",
-
-  //     });
-  //   }
-  // }, [open]);
   return (
     <div>
       <section className="page sidebar-2-page">
@@ -58,10 +33,14 @@ export default function Content() {
                 onClick={() => setIsOpen(!isOpen)}
               >
                 <span className="material-symbols-outlined">
-                  {isOpen ? <IoClose style={{fontSize:"1.2rem"}}/> : <IoIosMenu  style={{fontSize:"1.2rem"}}/>}
+                  {isOpen ? (
+                    <IoClose style={{ fontSize: "1.2rem" }} />
+                  ) : (
+                    <IoIosMenu style={{ fontSize: "1.2rem" }} />
+                  )}
                 </span>
               </button>
-              <p style={{marginLeft:"10px",color:"#fff"}}>Menü</p>
+              <p style={{ marginLeft: "10px", color: "#fff" }}>Menü</p>
             </header>
             <nav>
               {navItems.map((item) => (

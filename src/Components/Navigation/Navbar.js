@@ -15,10 +15,10 @@ export default function Navbar() {
     <div>
       <div className="header">
         <div className="nav">
-          <ul>
+          <ul className="ul">
             <li>
               <div className="logo">
-                <ul style={{ gap: "0.5rem" }}>
+                <ul style={{ gap: "0.5rem" }} className="ul">
                   <li>
                     <LuMenuSquare
                       style={{ fontSize: "1.5rem", marginTop: "5px" }}
@@ -31,44 +31,44 @@ export default function Navbar() {
               </div>
             </li>
             <li>
-              <a href="/">Çalışma Alanları</a>
+              <a href="/main">Çalışma Alanları</a>
               <FaAngleDown className="icons" style={{ marginLeft: "-15px" }} />
             </li>
 
             <li>
-              <a href="/">Oluştur</a>
+              <a href="/main">Oluştur</a>
               <FiPlus className="icons" />
             </li>
           </ul>
           <div className="profile">
-            <ul>
-              <li style={{ color: "#fff" }}>Hoşgeldin, {userData.name}</li>
-              <li>
-                <div className="square">
-                  <IoPersonSharp
-                    onClick={toggleOpen}
-                    style={{
-                      fontSize: "1.5rem",
-                      marginLeft: "5px",
-                      marginTop: "4px",
-                      color: "#fff",
-                      cursor: "pointer",
-                    }}
-                  />
+            <span style={{ color: "#fff" }}>Hoşgeldin, {userData.name}</span>
 
-                  {open && (
-                    <div className="navbar-toggle">
-                      <button
-                        className="navbar-toggleButton"
-                        onClick={signInOut}
-                      >
-                        Sign Out
-                      </button>
-                    </div>
-                  )}
+            <div className="square">
+              <IoPersonSharp
+                onClick={toggleOpen}
+                style={{
+                  fontSize: "1.3rem",
+                  marginLeft: "7px",
+                  marginTop: "6px",
+                  color: "#fff",
+                  cursor: "pointer",
+                }}
+              />
+
+              {open && (
+                <div className="navbar-toggle">
+                  <ul className="toggle-ul">
+                    <li>Hesabım</li>
+                    <li>{userData.name}</li>
+                    <li>{userData.email}</li>
+                  </ul>
+                  <hr className="hr"/>
+                  <button className="navbar-toggleButton" onClick={signInOut}>
+                    Çıkış Yap
+                  </button>
                 </div>
-              </li>
-            </ul>
+              )}
+            </div>
           </div>
         </div>
       </div>
