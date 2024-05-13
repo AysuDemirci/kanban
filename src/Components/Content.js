@@ -12,15 +12,14 @@ export default function Content() {
     handleAddCardClick,
     handleCardNameChange,
     handleCardContentChange,
-    sendDataToFirebase,
     getFirebaseData,
-    handleUpdateData
-    
+    handleCardNameBlur,
+    handleCardContentBlur,
   } = useKanbanContext();
 
-useEffect(()=>{
-getFirebaseData()
-},[])
+  useEffect(() => {
+    getFirebaseData();
+  }, []);
 
   return (
     <div>
@@ -34,13 +33,13 @@ getFirebaseData()
           <div className="card-content">
             <div className="list-addList-container">
               {list.map((listItem, index) => (
-              
                 <div className="card-group" key={listItem.id}>
                   <input
                     name="cardName"
                     className="card-name-input"
                     value={listItem.cardName}
                     onChange={(e) => handleCardNameChange(e, index)}
+                    onBlur={()=>handleCardNameBlur(listItem,index)}
                     placeholder="Liste İsmi Giriniz"
                   />
 
@@ -57,6 +56,7 @@ getFirebaseData()
                         onChange={(e) =>
                           handleCardContentChange(e, index, cardIndex)
                         }
+                        onBlur={() => handleCardContentBlur(listItem,index,cardIndex)}
                       />
                     </div>
                   ))}
@@ -66,9 +66,7 @@ getFirebaseData()
                   >
                     Kart Ekle <FaPlus className="plus-icon" />
                   </button>
-                  {/* {listItem.id === } */}
-                  <button onClick={()=>sendDataToFirebase(listItem)} >kaydet</button>
-                  <button onClick={()=>handleUpdateData(index)}>güncelle</button>
+                 
                 </div>
               ))}
               <button className="add-list" onClick={handleAddListClick}>

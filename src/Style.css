@@ -312,7 +312,7 @@ transition: margin-left 1s ease;
   padding: 20px 0px 0px 20px;
   margin-left: 60px;
   transition: margin-left 0.4s;
-width: 100%;
+
 
 
 }
@@ -323,7 +323,7 @@ width: 100%;
 .list-addList-container{
   display: flex;
   flex-wrap: nowrap;
-width: 100%;
+
 position: absolute;
 align-items: flex-start;
   gap: 1rem;
