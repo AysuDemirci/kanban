@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import firebaseConfig from "./firebaseConfig";
@@ -13,7 +13,7 @@ import {
 } from "firebase/auth";
 import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
-import { getDocs, collection } from "firebase/firestore";
+// import { getDocs, collection } from "firebase/firestore";
 
 const KanbanContext = React.createContext();
 
@@ -69,17 +69,29 @@ export function KanbanProvider(props) {
 
   }
 
-  async function handleUpdateData(listIndex){
+  async function handleUpdateCardNameData(listIndex){
     const newList = [...list];
     const user = auth.currentUser;
     const collectionRef = db.collection('users').doc(user.uid).collection('lists');
-    collectionRef.doc(list[listIndex].id).update({cardName:newList[listIndex].cardName,cards:newList[listIndex].cards})
+    collectionRef.doc(list[listIndex].id).update({cardName:newList[listIndex].cardName})
     .then(()=>{
       
       console.log("güncellendi")
-    }).catch((err)=>console.log(err))
+    }).catch((err)=>console.log("hata:",err))
   }
- console.log(list)
+  async function handleUpdateCardsData(listItem, listIndex) {
+    const user = auth.currentUser;
+    const collectionRef = db.collection('users').doc(user.uid).collection('lists');
+    try {
+      await collectionRef.doc(listItem.id).update({ cards: listItem.cards });
+      console.log("Kartlar güncellendi");
+    } catch (error) {
+      console.error("Kart güncelleme hatası:", error);
+    }
+  }
+
+
+
 async function getFirebaseData (){
   const user = auth.currentUser;
   const userListsRef = db
@@ -97,6 +109,26 @@ async function getFirebaseData (){
   });
 
   return () => unsubscribe(); 
+}
+
+function handleCardNameBlur(listItem,listIndex) {
+  if(listItem.userId!==undefined){
+    handleUpdateCardNameData(listIndex)
+  }else if(listItem.cardName === ""){
+    return
+  }
+  else{
+    sendDataToFirebase(listItem);
+  }
+  
+}
+
+function handleCardContentBlur(listItem, listIndex, cardIndex) {
+  if (listItem.userId !== undefined) {
+    handleUpdateCardsData(listItem, listIndex);
+  } else {
+    sendDataToFirebase(listItem);
+  }
 }
 
 
@@ -212,6 +244,7 @@ async function getFirebaseData (){
     const newList = [...list];
     newList[listIndex].cardName = value || "";
     setList(newList);
+    
   }
 
   function handleCardContentChange(e, listIndex, cardIndex) {
@@ -221,8 +254,12 @@ async function getFirebaseData (){
     setList(newList);
   }
 
+
+
   const value = {
     signUp,
+    handleCardNameBlur,
+    handleCardContentBlur,
     handleChangeValue,
     userData,
     signIn,
@@ -237,7 +274,8 @@ async function getFirebaseData (){
     handleCardContentChange,
     getFirebaseData,
     sendDataToFirebase,
-    handleUpdateData,
+    handleUpdateCardsData,
+    handleUpdateCardNameData,
   };
   return (
     <KanbanContext.Provider value={value}>
