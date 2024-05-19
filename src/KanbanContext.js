@@ -35,6 +35,9 @@ export function KanbanProvider(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [listId, setListId] = useState(uuidv4());
   const [cardId, setCardId] = useState(uuidv4());
+  const [draggedItemIndex, setDraggedItemIndex] = useState(null);
+  const [draggedCard, setDraggedCard] = useState(null);
+  const [draggedFromList, setDraggedFromList] = useState(null);
   //  const[user,setUser]=useState(null)
 
   const [list, setList] = useState([
@@ -114,9 +117,10 @@ async function getFirebaseData (){
 function handleCardNameBlur(listItem,listIndex) {
   if(listItem.userId!==undefined){
     handleUpdateCardNameData(listIndex)
-  }else if(listItem.cardName === ""){
-    return
   }
+  // else if(listItem.cardName === ""){
+  //   return
+  // }
   else{
     sendDataToFirebase(listItem);
   }
@@ -254,7 +258,92 @@ function handleCardContentBlur(listItem, listIndex, cardIndex) {
     setList(newList);
   }
 
+//   function handleDragStart(index){
+// setDraggedItemIndex(index)
+//   }
+//    function handleDragOver(index){
+//     const draggedOverItemIndex=index;
+//     if(draggedItemIndex===draggedOverItemIndex){
+//       return
+//     }
+//     const newList = [...list];
+//     const item = newList[draggedItemIndex];
+//     newList.splice(draggedItemIndex, 1);
+//     newList.splice(draggedOverItemIndex, 0, item);
 
+//     setDraggedItemIndex(draggedOverItemIndex);
+//     setList(newList);
+//    }
+
+//    const handleDragEnd = () => {
+//     setDraggedItemIndex(null);
+//   };
+
+//   const handleCardDragStart = (e, card, listIndex) => {
+//     setDraggedCard(card);
+//     setDraggedFromList(listIndex);
+//     e.dataTransfer.effectAllowed = "move";
+//   };
+
+//   const handleCardDragOver = (e) => {
+//     e.preventDefault();
+//   };
+
+//   const handleCardDrop = (e, dropListIndex) => {
+//     e.preventDefault();
+//     const newList = [...list];
+//     if (draggedFromList !== null && draggedCard !== null) {
+  
+//       const fromList = newList[draggedFromList];
+//       fromList.cards = fromList.cards.filter((card) => card.id !== draggedCard.id);
+
+  
+//       const toList = newList[dropListIndex];
+//       toList.cards.push(draggedCard);
+
+//       setList(newList);
+//       setDraggedCard(null);
+//       setDraggedFromList(null);
+//     }
+//   };
+//   [, ] = useState(null);
+
+  const handleDragStart = (e, card, listIndex) => {
+    setDraggedCard(card);
+    setDraggedFromList(listIndex);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = async (e, dropListIndex) => {
+    e.preventDefault();
+    if (draggedFromList !== null && draggedCard !== null) {
+      const newList = [...list];
+      const fromList = newList[draggedFromList];
+      const toList = newList[dropListIndex];
+
+      // Remove card from original list
+      fromList.cards = fromList.cards.filter((card) => card.id !== draggedCard.id);
+
+      // Add card to new list
+      toList.cards.push(draggedCard);
+
+      setList(newList);
+      try {
+        await handleUpdateCardsData(fromList, draggedFromList);
+        await handleUpdateCardsData(toList, dropListIndex);
+      } catch (error) {
+        console.error("Kart güncelleme hatası:", error);
+      }
+      setDraggedCard(null);
+      setDraggedFromList(null);
+      
+    }
+  };
+  
 
   const value = {
     signUp,
@@ -276,6 +365,15 @@ function handleCardContentBlur(listItem, listIndex, cardIndex) {
     sendDataToFirebase,
     handleUpdateCardsData,
     handleUpdateCardNameData,
+    handleDragStart,
+    handleDragOver,
+    draggedItemIndex, 
+    setDraggedItemIndex,
+    draggedCard,
+    setDraggedCard,
+    draggedFromList,
+    setDraggedFromList,
+    handleDrop
   };
   return (
     <KanbanContext.Provider value={value}>

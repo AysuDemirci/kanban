@@ -551,3 +551,7 @@ line-break: auto;
 .add-list:hover{
   background: rgb(0 0 0 / 4%);
 }
+
+.dragging {
+  opacity: 0.5;
+}
