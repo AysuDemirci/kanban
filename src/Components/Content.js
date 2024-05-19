@@ -15,6 +15,10 @@ export default function Content() {
     getFirebaseData,
     handleCardNameBlur,
     handleCardContentBlur,
+    handleDragStart,
+    handleDragOver,
+    draggedItemIndex,
+    handleDrop
   } = useKanbanContext();
 
   useEffect(() => {
@@ -33,18 +37,31 @@ export default function Content() {
           <div className="card-content">
             <div className="list-addList-container">
               {list.map((listItem, index) => (
-                <div className="card-group" key={listItem.id}>
+                <div
+                  className={`card-group ${
+                    draggedItemIndex === index ? "dragging" : ""
+                  }`}
+                  key={listItem.id}
+                  onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, index)}
+                >
                   <input
                     name="cardName"
                     className="card-name-input"
                     value={listItem.cardName}
                     onChange={(e) => handleCardNameChange(e, index)}
-                    onBlur={()=>handleCardNameBlur(listItem,index)}
+                    onBlur={() => handleCardNameBlur(listItem, index)}
                     placeholder="Liste İsmi Giriniz"
                   />
 
                   {listItem.cards.map((card, cardIndex) => (
-                    <div key={card.id} className="cards">
+                    <div
+                      key={card.id}
+                      className="cards"
+                      draggable
+                      onDragStart={(e) => handleDragStart(e, card, index)}
+                  
+                    >
                       <textarea
                         className="cardInput card"
                         name="card"
@@ -56,7 +73,9 @@ export default function Content() {
                         onChange={(e) =>
                           handleCardContentChange(e, index, cardIndex)
                         }
-                        onBlur={() => handleCardContentBlur(listItem,index,cardIndex)}
+                        onBlur={() =>
+                          handleCardContentBlur(listItem, index, cardIndex)
+                        }
                       />
                     </div>
                   ))}
@@ -66,7 +85,6 @@ export default function Content() {
                   >
                     Kart Ekle <FaPlus className="plus-icon" />
                   </button>
-                 
                 </div>
               ))}
               <button className="add-list" onClick={handleAddListClick}>
